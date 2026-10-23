@@ -1,0 +1,14 @@
+{
+  "name": "google-ads-claude",
+  "owner": { "name": "Pitter Lopes", "url": "https://github.com/PitterLopes" },
+  "metadata": { "description": "Plugin de Google Ads para o Claude" },
+  "plugins": [
+    {
+      "name": "google-ads",
+      "source": "./",
+      "description": "Crie, audite e otimize campanhas do Google Ads com o Claude.",
+      "version": "0.1.0",
+      "category": "marketing"
+    }
+  ]
+}
