@@ -36,11 +36,13 @@ Use a primeira fonte disponível e diga ao usuário qual usou:
 
 | Fonte | Como reconhecer | Lê | Escreve |
 |---|---|---|---|
+| **Servidor do próprio plugin** (`google-ads`, conta de serviço) | ferramentas `consulta_gaql` / `simular_campanha_pesquisa` / `criar_campanha_pesquisa` | sim (GAQL) | cria campanha de Pesquisa pausada, após simulação e ok |
 | MCP oficial do Google Ads (`googleads/google-ads-mcp`) | ferramentas `search` / `list_accessible_customers` | sim (GAQL) | não |
 | Windsor.ai ou outro conector com Google Ads | ferramentas `get_data`, `execute_action` (`google_ads`) | sim | sim, com confirmação |
 | CSV/planilha exportada pela interface do Google Ads | arquivo enviado pelo usuário | sim | não |
 | Nenhuma | — | peça um export (veja abaixo) | gere arquivo do Editor |
 
+Se o servidor do plugin responder "Configuração não encontrada", siga a seção **Conectando à sua conta** do README.
 Consultas GAQL prontas estão em `references/gaql-queries.md`. Ao usar conectores, descubra as ações e campos
 disponíveis antes (ex.: `list_actions`, `get_fields`) em vez de supor que existem.
 

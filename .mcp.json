@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "google-ads": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/server/run.sh"
+    }
+  }
+}

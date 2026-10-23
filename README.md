@@ -41,15 +41,45 @@ de `skills/` compactada.
 
 ## Conectando à sua conta (opcional)
 
-O plugin detecta a fonte disponível e diz qual usou:
+O plugin traz um **servidor MCP próprio** (`server/`) que fala direto com a API do Google Ads, sem serviço de
+terceiros. Ferramentas:
 
-1. **MCP oficial do Google Ads** — [googleads/google-ads-mcp](https://github.com/googleads/google-ads-mcp).
-   Somente leitura, consultas GAQL. Precisa de developer token da API do Google Ads e credenciais do Google Cloud;
-   siga o README do repositório.
-2. **Conectores de terceiros** (ex.: Windsor.ai) — leitura e, em alguns, escrita (orçamento, status, palavras-chave).
-   Toda escrita passa por confirmação.
-3. **Sem conector** — exporte relatórios da interface (Campanhas, Termos de pesquisa, Anúncios, Palavras-chave) em CSV
-   e envie para o Claude.
+| Ferramenta | O que faz |
+|---|---|
+| `contas_acessiveis` | Lista as contas que a credencial enxerga |
+| `consulta_gaql` | Roda consultas GAQL (somente `SELECT`) |
+| `simular_campanha_pesquisa` | Valida uma campanha de Pesquisa (regras do validador + `validate_only` na API) sem criar nada e devolve um código |
+| `criar_campanha_pesquisa` | Cria **pausada** a campanha já simulada; exige o código da simulação do mesmo plano e grava no changelog |
+
+### Configurar (uma vez)
+1. **Google Cloud** ([console](https://console.cloud.google.com)): crie um projeto, ative a **Google Ads API** e, em
+   *Google Ads API › Visão geral*, peça o nível **Exploração** (aprovação automática; já permite contas reais e
+   gestão de campanhas). O formulário da "Central de API" do Google Ads hoje só serve para apps; não use.
+2. **Conta de serviço**: *IAM e administrador › Contas de serviço* → criar → *Chaves › Adicionar chave › JSON*.
+   Guarde o arquivo fora do repositório (ex.: `~/.config/google-ads-claude/credentials.json`).
+3. **Google Ads**: na conta de anúncios, *Administrador › Acesso e segurança › Usuários › +*, adicione o e-mail da
+   conta de serviço com nível **Padrão** (para só ler, **Somente leitura**).
+4. Crie `~/.config/google-ads-claude/config.json`:
+   ```json
+   {
+     "json_key_file_path": "~/.config/google-ads-claude/credentials.json",
+     "conta_padrao": "123-456-7890",
+     "orcamento_diario_maximo": 100,
+     "changelog": "~/google-ads-changelog.md"
+   }
+   ```
+   `orcamento_diario_maximo` (R$/dia) bloqueia campanhas acima do limite. `login_customer_id` (conta de
+   administrador) e `developer_token` são opcionais. Outro caminho: variável `GOOGLE_ADS_CLAUDE_CONFIG`.
+5. Rode uma vez `server/run.sh --instalar` (cria o ambiente Python em `~/.cache/google-ads-claude`; precisa de
+   Python 3.10+). Depois disso o Claude sobe o servidor sozinho.
+
+Testes do servidor (sem rede): `~/.cache/google-ads-claude/venv-*/bin/python -m unittest discover -s server/tests`.
+
+### Outras fontes
+- **MCP oficial do Google Ads** — [googleads/google-ads-mcp](https://github.com/googleads/google-ads-mcp), só leitura.
+- **Conectores de terceiros** (ex.: Windsor.ai) — leitura e, em alguns, escrita. Toda escrita passa por confirmação.
+- **Sem conector** — exporte relatórios da interface (Campanhas, Termos de pesquisa, Anúncios, Palavras-chave) em CSV
+  e envie para o Claude.
 
 ## Primeiro uso
 
@@ -72,7 +102,7 @@ palavras-chave ativas**. Para importar: Google Ads Editor → Conta › Importar
 
 ## Segurança
 
-- Nenhuma alteração sem "ok" explícito, item a item.
+- Nenhuma alteração sem "ok" explícito, item a item. Criar exige simular antes, e o código da simulação só vale para aquele plano exato.
 - Campanhas novas sobem pausadas; orçamento total não sobe sem autorização.
 - Pausa em vez de excluir.
 

@@ -4,3 +4,5 @@ __pycache__/
 out/
 .google-ads-context.local.md
 dist/
+credentials*.json
+*.local.json

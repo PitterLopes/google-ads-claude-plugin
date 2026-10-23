@@ -1,7 +1,7 @@
 {
   "name": "google-ads",
-  "version": "0.1.0",
-  "description": "Crie, audite e otimize campanhas do Google Ads com o Claude: estrutura, palavras-chave, anúncios RSA, termos de pesquisa, orçamento e revisão semanal. Gera arquivos prontos para o Google Ads Editor e nunca altera a conta sem confirmação.",
+  "version": "0.2.0",
+  "description": "Crie, audite e otimize campanhas do Google Ads com o Claude: estrutura, palavras-chave, anúncios RSA, termos de pesquisa, orçamento e revisão semanal. Lê a conta pela API do Google Ads (servidor MCP próprio), cria campanhas de Pesquisa pausadas após simulação e confirmação, e gera arquivos para o Google Ads Editor.",
   "author": { "name": "Pitter Lopes", "url": "https://github.com/PitterLopes" },
   "homepage": "https://github.com/PitterLopes/google-ads-claude-plugin",
   "repository": "https://github.com/PitterLopes/google-ads-claude-plugin",

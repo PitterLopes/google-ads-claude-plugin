@@ -1,6 +1,6 @@
 # Consultas GAQL prontas
 
-Para uso com o MCP oficial do Google Ads (ferramenta `search`) ou qualquer cliente da API.
+Para uso com a ferramenta `consulta_gaql` do plugin, o MCP oficial do Google Ads (ferramenta `search`) ou qualquer cliente da API.
 Troque `LAST_30_DAYS` por `DURING LAST_7_DAYS`, `LAST_14_DAYS` ou `segments.date BETWEEN 'AAAA-MM-DD' AND 'AAAA-MM-DD'`.
 Valores `*_micros` ÷ 1.000.000 = moeda da conta.
 

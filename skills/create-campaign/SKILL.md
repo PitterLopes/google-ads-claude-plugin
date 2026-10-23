@@ -65,9 +65,18 @@ Diga ao usuário como importar:
 3. A campanha sobe pausada; ative quando revisar extensões e conversões.
 
 ## Publicação direta (opcional)
-Só se houver conector com escrita no Google Ads (ex.: Windsor.ai `execute_action` com `google_ads`) **e** o
-usuário confirmar explicitamente depois de ver o plano. Descubra as ações disponíveis antes (`list_actions`),
-crie tudo pausado, registre em `google-ads-changelog.md` e informe os IDs criados.
+Com o servidor do plugin (`simular_campanha_pesquisa` / `criar_campanha_pesquisa`), em vez de importar no Editor:
+1. Monte o plano (mesmos grupos, palavras-chave, RSAs e negativas do CSV) e chame `simular_campanha_pesquisa`.
+   Ela valida localmente com as mesmas regras do validador e roda `validate_only` na API; nada é criado.
+2. Mostre ao usuário o resumo devolvido e peça um **ok explícito**. Sem ok, pare aqui.
+3. Com o ok, chame `criar_campanha_pesquisa` com o **mesmo** plano e o código de confirmação. Qualquer mudança
+   no plano invalida o código: simule de novo e peça novo ok.
+4. A campanha nasce **pausada** (não há como criar ativa) e a mudança vai para o changelog. Informe o ID criado.
+
+Extensões (sitelinks, destaques, snippets) ainda não são criadas pela ferramenta: entregue-as no plano para o
+usuário adicionar. Sem o servidor, só use outro conector com escrita (ex.: Windsor.ai `execute_action` com
+`google_ads`) se o usuário confirmar explicitamente depois de ver o plano; crie tudo pausado e registre em
+`google-ads-changelog.md`.
 
 ## Variações
 - **Performance Max**: em vez de palavras-chave, entregue grupo de recursos (15 títulos curtos, 5 longos, 5 descrições,
